@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+ <form onsubmit="saveToLocalStorage(event)">
+    <label>Name</label>
+    <input type="text" name="username" required>
+    <label>Email</label>
+    <input type="text" name="email" required>
+    <label>PhNumber</label>
+    <input type="tel" name="phno">
+    <button>Submit</button>
+    
+    </form>  
+    <ul id="listOfUSer"></ul>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.6.2/axios.min.js"></script>
+     <script>
+
+         function saveToLocalStorage(event){
+             event.preventDefault();
+            const username =event.target.username.value;
+             const  email=event.target.email.value;
+             const phno =event.target.phno.value;
+            // localStorage.setItem('name',name);
+             //localStorage.setItem('email',email);
+             //localStorage.setItem('phno',phno);
+            const obj = {
+                username,
+               email,
+               phno
+            };
+            axios.post("https://crudcrud.com/api/cba0235db1b945be84103fb19f4a6916/appoinmentData",obj)
+            .then((response)=>{
+                shoowNewUserOnScreen(response.data)
+                console.log(response);
+            })
+            .catch((err)=>{
+                console.log(err)
+         })
+            
+            //localStorage.setItem('userdetail',JSON.stringify(obj));
+            //shoowNewUserOnScreen(obj)
+        }
+        //    window.addEventListener("DOMContentLoaded", () => {
+        //     const localStorageObj =localStorage;
+        //     const localStorageKeys = Object.keys(localStorageObj)
+            
+
+        //     for(var i=0;i<localStorageKeys.length;i++){
+        //         const key =localStorage[i]
+        //         const userdetailString = localStorageObj[key];
+        //         const userdetailObj = JSON.parse(userdetailString);
+        //     shoowNewUserOnScreen(userdetailObj)          
+        // }
+        //    }) 
+        function saveToLocalStorage(event){
+        event.preventDefault();
+        const Expenseampount=event.target.username.value;
+        const Cdescripption=event.target.email.value;
+        const choosecatagory=event.target.phno.value;
+    
+
+    const obj={
+        username,
+        email,
+        phno
+     }
+     localStorage.setItem(obj.Cdescripption,JSON.stringify(obj))
+     showOnScreenServer(obj)
+    }
+    function showOnScreenServer(obj){
+  const parentele = document.getElementById('listOfitem')
+  const childElem =document.createElement('li');
+  childElem.textContent = obj.username +' - ' + obj.email +'-' + obj.phno;
+  //parentele.appendChild(childElem);
+   const deletebtn = document.createElement('input');
+         deletebtn.type="button";
+         deletebtn.value="Delete";
+
+         deletebtn.onclick = () => {
+             localStorage.removeItem(obj.email);
+             parentele.removeChild(childElem)
+
+
+  }
+  childElem.appendChild(deletebtn);
+  
+  parentele.appendChild(childElem);
+}
+    </script> 
+</body>
+</html>
